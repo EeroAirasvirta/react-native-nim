@@ -13,9 +13,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.statusText}>{`Turn: Player ${currentPlayer}`}</Text>
-      <View style={styles.gameAreaContainer}>
-        <GameBoard />
-      </View>
+      <GameBoard />
       <View style={styles.buttonContainer}>
         <Button title="Reset" />
         <Button title="End turn" onPress={endTurn} />
@@ -30,18 +28,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusText: {
-    backgroundColor: "#dddddd",
     fontSize: 30,
     paddingVertical: 10,
-  },
-  gameAreaContainer: {
-    flex: 1,
+    width: '100%',
+    textAlign: 'center',
+    backgroundColor: 'rgba(10, 10, 10, 0.1)'
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
-    marginTop: 20,
-    justifyContent: "space-between",
-    backgroundColor: 'rgba(10,10,10,0.2)'
+    padding: 20,
+    width: '100%',
+    justifyContent: "space-around",
+    backgroundColor: 'rgba(10, 10, 10, 0.1)'
   }
 })

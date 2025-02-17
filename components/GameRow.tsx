@@ -2,24 +2,23 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
-  rowNumber: number
+  items: number
   onPress?(): void;
 }
 
-export default function GameRow({ rowNumber, onPress }: Props) {
-  const numberOfViews = rowNumber * 2 + 1;
-  const [matchesLeft, setMatchesLeft] = useState(numberOfViews);
+export default function GameRow({ items, onPress }: Props) {
+  const [matchesLeft, setMatchesLeft] = useState(items);
 
   const removeItem = () => {
-    if (matchesLeft > 0 )
-    {
+    if (matchesLeft > 0) {
       setMatchesLeft(matchesLeft - 1);
+      console.log("Match removed");
     }
   }
 
   return (
-    <Pressable onPress={removeItem}>
-      <View style={styles.container}>
+    <Pressable style={styles.rowContainer} onPress={removeItem}>
+      <View style={styles.row}>
         {Array.from({ length: matchesLeft }).map((_, index) => (
           <View key={index} style={styles.item} />
         ))}
@@ -29,20 +28,20 @@ export default function GameRow({ rowNumber, onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  rowContainer: {
+    flex: 1,
+  },
+  row: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center',
-    //height: 150,
-    minHeight: 100,
-    borderBlockColor: "black",
-    // borderWidth: 3,
-    // backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    alignItems: 'center',
+    height: '100%'
   },
   item: {
     width: 10,
-    // minHeight: 30,
-    margin: 20,
+    height: '70%',
+    marginHorizontal: 20,
     borderRadius: 5,
     backgroundColor: 'red',
     borderWidth: 1,
