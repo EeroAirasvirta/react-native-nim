@@ -1,25 +1,15 @@
-import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
-  items: number
-  onPress?(): void;
+  matches: number
+  onPress(): void;
 }
 
-export default function GameRow({ items, onPress }: Props) {
-  const [matchesLeft, setMatchesLeft] = useState(items);
-
-  const removeItem = () => {
-    if (matchesLeft > 0) {
-      setMatchesLeft(matchesLeft - 1);
-      console.log("Match removed");
-    }
-  }
-
+export default function GameRow({ matches, onPress }: Props) {
   return (
-    <Pressable style={styles.rowContainer} onPress={removeItem}>
+    <Pressable style={styles.rowContainer} onPress={onPress}>
       <View style={styles.row}>
-        {Array.from({ length: matchesLeft }).map((_, index) => (
+        {Array.from({ length: matches }).map((_, index) => (
           <View key={index} style={styles.item} />
         ))}
       </View>

@@ -1,14 +1,16 @@
 import { StyleSheet, View } from 'react-native';
-import { useState } from 'react';
 import GameRow from "./GameRow"
 
-export default function GameBoard() {
-  const [board, setBoard] = useState([1, 3, 5, 7])
+type Props = {
+  board: number[],
+  onRowPressed: (index: number) => void;
+}
 
+export default function GameBoard({ board, onRowPressed }: Props) {
   return (
     <View style={styles.container}>
       {board.map((key, index) => (
-        <GameRow key={index} items={key} />
+        <GameRow key={index} matches={key} onPress={() => onRowPressed(index)} />
       ))}
     </View>
   )
