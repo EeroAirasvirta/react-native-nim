@@ -1,17 +1,19 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-import { act, useState } from "react";
+import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
 
 import GameBoard from "@/components/GameBoard";
+import RestartModal from "@/components/RestartModal";
 
 export default function Index() {
-  const defaultBoard = [1,3,5,7];
+  const defaultBoard = [1, 3, 5, 7];
 
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
   const [activeRow, setActiveRow] = useState<number | null>(null);
   const [removedMatches, setRemovedMatches] = useState(0);
+  const [restartModalVisible, setRestartModalVisible] = useState(false);
 
-  const endTurn = () => {
+  const onEndTurnPressed = () => {
     if (activeRow === null || removedMatches === 0) {
       console.log(`Tried to end turn before removing any matches. Doing nothing.`)
       return;
@@ -30,18 +32,22 @@ export default function Index() {
     setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
   }
 
+  const onRestartPressed = () => {
+    setRestartModalVisible(true);
+  }
+
   const restartGame = () => {
     console.log(`Restart game`);
     setBoard(defaultBoard);
     setRemovedMatches(0);
     setActiveRow(null);
     setCurrentPlayer(1);
+    setRestartModalVisible(false);
   }
 
   const onRowPressed = (index: number) => {
     // Case: Empty row. Reset.
-    if (board[index] === 0)
-    {
+    if (board[index] === 0) {
       console.log(`Empty row ${index}`);
       setActiveRow(null);
       setRemovedMatches(0);
@@ -65,11 +71,12 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.statusText}>{`Turn: Player ${currentPlayer}`}</Text>
-      <GameBoard board={board} activeRow={activeRow} removedMatches={removedMatches} onRowPressed={onRowPressed}/>
+      <GameBoard board={board} activeRow={activeRow} removedMatches={removedMatches} onRowPressed={onRowPressed} />
       <View style={styles.buttonContainer}>
-        <Button title="Restart" onPress={restartGame} />
-        <Button title="End turn" onPress={endTurn} />
+        <Button title="Restart" onPress={onRestartPressed} />
+        <Button title="End turn" onPress={onEndTurnPressed} />
       </View>
+      <RestartModal isVisible={restartModalVisible} onRestartPressed={restartGame} onCancelPressed={() => setRestartModalVisible(false)} />
     </View>
   );
 }
@@ -84,13 +91,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: '100%',
     textAlign: 'center',
-    backgroundColor: 'rgba(10, 10, 10, 0.1)'
+    backgroundColor: '#dddddd'
   },
   buttonContainer: {
     flexDirection: 'row',
     padding: 20,
     width: '100%',
     justifyContent: "space-around",
-    backgroundColor: 'rgba(10, 10, 10, 0.1)'
+    backgroundColor: '#dddddd'
   }
 })
