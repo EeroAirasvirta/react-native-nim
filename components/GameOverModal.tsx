@@ -1,20 +1,19 @@
-import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { Button, Modal, StyleSheet, Text, View } from "react-native"
 
 type Props = {
   isVisible: boolean;
-  onCancelPressed: () => void;
-  onRestartPressed: () => void;
+  winner: number | null;
+  onNewGamePressed: () => void;
 }
 
-export default function RestartModal({ isVisible, onCancelPressed, onRestartPressed }: Props) {
+export default function GameOverModal({ isVisible, winner, onNewGamePressed }: Props) {
   return (
     <Modal animationType="fade" transparent visible={isVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalContent}>
-          <Text style={styles.title}>Restart game?</Text>
+          <Text style={styles.title}>Player {winner} wins!</Text>
           <View style={styles.buttonContainer} >
-            <Button title="Cancel" onPress={onCancelPressed} />
-            <Button title="Restart" onPress={onRestartPressed} />
+            <Button title="New Game" onPress={onNewGamePressed} />
           </View>
         </View>
       </View>

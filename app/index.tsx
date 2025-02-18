@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import GameBoard from "@/components/GameBoard";
 import RestartModal from "@/components/RestartModal";
+import GameOverModal from "@/components/GameOverModal";
 
 export default function Index() {
   const defaultBoard = [1, 3, 5, 7];
@@ -11,7 +12,9 @@ export default function Index() {
   const [board, setBoard] = useState(defaultBoard);
   const [activeRow, setActiveRow] = useState<number | null>(null);
   const [removedMatches, setRemovedMatches] = useState(0);
+  const [winner, setWinner] = useState<number | null>(null);
   const [restartModalVisible, setRestartModalVisible] = useState(false);
+  const [gameOverModalVisible, setGameOverModalVisible] = useState(false);
 
   const onEndTurnPressed = () => {
     if (activeRow === null || removedMatches === 0) {
@@ -26,7 +29,8 @@ export default function Index() {
     setRemovedMatches(0);
 
     if (newBoard.every(num => num === 0)) {
-      console.log(`Player ${currentPlayer} lost the game`);
+      setWinner(currentPlayer === 1 ? 2 : 1);
+      setGameOverModalVisible(true);
     }
 
     setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
@@ -37,12 +41,12 @@ export default function Index() {
   }
 
   const restartGame = () => {
-    console.log(`Restart game`);
     setBoard(defaultBoard);
     setRemovedMatches(0);
     setActiveRow(null);
     setCurrentPlayer(1);
     setRestartModalVisible(false);
+    setGameOverModalVisible(false);
   }
 
   const onRowPressed = (index: number) => {
@@ -77,6 +81,7 @@ export default function Index() {
         <Button title="End turn" onPress={onEndTurnPressed} />
       </View>
       <RestartModal isVisible={restartModalVisible} onRestartPressed={restartGame} onCancelPressed={() => setRestartModalVisible(false)} />
+      <GameOverModal isVisible={gameOverModalVisible} winner={winner} onNewGamePressed={restartGame} />
     </View>
   );
 }
