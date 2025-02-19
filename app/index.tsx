@@ -1,4 +1,4 @@
-import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 
 import GameBoard from "@/components/GameBoard";
