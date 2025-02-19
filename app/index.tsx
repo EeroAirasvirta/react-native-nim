@@ -78,7 +78,7 @@ export default function Index() {
       <GameBoard board={board} activeRow={activeRow} removedMatches={removedMatches} onRowPressed={onRowPressed} />
       <View style={styles.buttonContainer}>
         <Button title="Restart" onPress={onRestartPressed} />
-        <Button title="End turn" onPress={onEndTurnPressed} />
+        <Button title="End turn" onPress={onEndTurnPressed} disabled={removedMatches === 0} />
       </View>
       <RestartModal isVisible={restartModalVisible} onRestartPressed={restartGame} onCancelPressed={() => setRestartModalVisible(false)} />
       <GameOverModal isVisible={gameOverModalVisible} winner={winner} onNewGamePressed={restartGame} />
