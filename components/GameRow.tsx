@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import MatchStick from './MatchStick';
+
 type Props = {
   matches: number;
   removedMatches: number;
@@ -12,10 +14,10 @@ export default function GameRow({ matches, removedMatches, onPress }: Props) {
     <Pressable style={styles.rowContainer} onPress={onPress}>
       <View style={styles.row}>
         {Array.from({ length: matches - removedMatches }).map((_, index) => (
-          <View key={index} style={styles.match} />
+          <MatchStick key={index} selected={false} />
         ))}
         {Array.from({ length: removedMatches }).map((_, index) => (
-          <View key={index} style={[styles.match, { backgroundColor: 'rgba(255, 0, 0, 0.15)', borderStyle: 'dashed' }]} />
+          <MatchStick key={index} selected={true} />
         ))}
       </View>
     </Pressable>
@@ -31,14 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%'
-  },
-  match: {
-    width: 10,
-    height: '70%',
-    marginHorizontal: 20,
-    borderRadius: 5,
-    backgroundColor: 'rgba(255, 0,0,1)',
-    borderWidth: 1,
+    height: '100%',
   },
 })
